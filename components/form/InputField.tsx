@@ -12,9 +12,11 @@ interface P {
 
 export default function InputField(props: any) {
     
-    const {name, label, value, formikBag, ...rest}= props
-    const {values, handleChange} = formikBag
-    // {alignSelf: "center", flex: 1, justifyContent: "center", marginTop: 4, marginRight: 4}
+    const {name, label, value, formikBag,  ...rest}= props
+    const {values, errors, touched, handleChange} = formikBag
+    
+    const hasError = (touched[name] && errors[name]) ? true : false
+    const errorMsg = errors[name];
     return (
         <View style={[formStyles.inputContainer, ]}>
             {label && <Text>{label}</Text>}
@@ -24,6 +26,10 @@ export default function InputField(props: any) {
                 value={value ? value : values[name]}
                 onChangeText={handleChange(name)}
                 {...rest}/>
+           {hasError &&
+
+            <Text style={formStyles.formError}>{errorMsg}</Text>
+           }
         </View>
     )
 }

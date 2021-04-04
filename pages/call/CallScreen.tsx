@@ -78,6 +78,7 @@ function CallScreen() {
         Speech.stop();
         Vibration.cancel();
         // console.log(store.glitchBg)
+        
         store.updateStartedSpeech(false);
         if(ringtone){
             await ringtone.stopAsync();

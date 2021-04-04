@@ -29,13 +29,14 @@ export default function ChatScreen() {
         
         const loadPokeSound = async() => {
             const pokeSound = await getPokeSound();
-            Audio.setAudioModeAsync({playsInSilentModeIOS: true})
             setPokeSound(pokeSound);
         }
         loadPokeSound()
         return () => {
             if(pokeSound){
                 pokeSound.unloadAsync();
+                console.log("Unloading poke sound")
+                setPokeSound("")
             }
         }
     }, [])
@@ -46,7 +47,6 @@ export default function ChatScreen() {
         setMessages((previousMessages: any) => GiftedChat.append(previousMessages, messages))
         const {text} = messages[0]
         let responseArr: any = []
-        console.log(store.user)
         const response = reply(text, pokeCounter)
         const responseObj = formatBotGiftedChatResponse(response.body, botName);
         responseArr = responseArr.concat(responseObj)
@@ -56,10 +56,15 @@ export default function ChatScreen() {
 
     
     const poke = async () => {
-        bypassSilentMode();
-        setPokeCounter(pokeCounter+1);
         
-        pokeSound.playAsync();
+        setPokeCounter(pokeCounter+1);
+
+        Audio.setAudioModeAsync({playsInSilentModeIOS: true})
+        const {sound} = await Audio.Sound.createAsync(
+            require("../../assets/sounds/fart.mp3")
+        )
+        
+        sound.playAsync();
         Vibration.vibrate();
         
         if (pokeCounter <= 15){

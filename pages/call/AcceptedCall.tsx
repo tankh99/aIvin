@@ -85,8 +85,6 @@ function AcceptedCall({glitchBg, forceStop, toggleCalling, }: any) {
                     navigation.navigate("Reset")
                     resetFactoryDefault();
                 }
-                
-
             }]},
             {text: "want to talk", pitch: getPitch(10), delay: 200},
             {text: "want to talk", pitch: getPitch(10), delay: 200, },

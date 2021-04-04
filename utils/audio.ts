@@ -3,6 +3,7 @@ import {Audio} from 'expo-av';
 
 export async function getPokeSound(){
     Audio.setAudioModeAsync({playsInSilentModeIOS: true})
+    console.log("Loading sound")
     const {sound} = await Audio.Sound.createAsync(
         require("../assets/sounds/fart.mp3")
     )

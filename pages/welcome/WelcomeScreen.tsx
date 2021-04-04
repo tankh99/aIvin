@@ -1,12 +1,17 @@
 import { Formik } from 'formik'
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Alert } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import InputField from '../../components/form/InputField'
-import {Button } from 'react-native-ui-lib'
 import ViewRoot from '../../components/ViewRoot'
 import { store } from '../../store/store'
 import { useNavigation } from '@react-navigation/native'
+import { Button } from '@ant-design/react-native'
+import * as Yup from 'yup'
+
+const validationSchema = Yup.object({
+    username: Yup.string().required("Username is required")
+})
 
 export default function WelcomeScreen() {
 
@@ -18,13 +23,16 @@ export default function WelcomeScreen() {
         console.log(store.user)
         navigation.navigate("Chat")
     }
+    
 
     return (
         <ViewRoot safe padded style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
                 <Text style={{fontWeight: "bold", fontSize:36, textAlign:"center", marginBottom: 28}}>Choose a name</Text>
+                {/* <Button onPress={()=> alert()}>Alert</Button> */}
                 <Formik
                     initialValues={{username: ""}}
-                    onSubmit={handleSubmit}>
+                    onSubmit={handleSubmit}
+                    validationSchema={validationSchema}>
                     {(formikBag) => {
                         const {handleSubmit} = formikBag
                         return (
@@ -36,9 +44,8 @@ export default function WelcomeScreen() {
                                     formikBag={formikBag}
                                     autoCorrect={false}/>
                                 
-                                <Button onPress={() => handleSubmit()}>
-                                    <Text style={{color: "white"}}>Start Chatting</Text>
-                                </Button>
+                                <Button type="primary"
+                                    onPress={() => handleSubmit()}>Start Chatting</Button>
                             </View>
                         )
                     }}

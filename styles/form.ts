@@ -41,5 +41,8 @@ export const styles = StyleSheet.create({
     },
     inputError: {
       color: theme.colors.red
+    },
+    button: {
+      
     }
   });

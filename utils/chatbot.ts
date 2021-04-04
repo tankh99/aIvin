@@ -65,8 +65,21 @@ const whyResponses = [
     "Even if you ask me, I don't know",
     "Why? Why what? How would I know?",
     "Listen, I'm not actually made with real AI. It's all imagination!",
+    "Look, I'm not an all-knowing AI. Now stop asking me, capiche?"
 ]
 
+const yesResponses = [
+    "Ok then",
+    "I see...",
+    "Sure"
+]
+
+const noResponses = [
+    "You sure?",
+    "I don't believe you",
+    "Okay, man",
+    "Give it more thought"
+]
 
 export function reply(input: string, pokeCount: number){
 
@@ -82,14 +95,22 @@ export function reply(input: string, pokeCount: number){
 
     input = input.trim().toLowerCase();
     const numberRegex = /[0-9]+/
-    const greetingRegex = /(hello|hi|howdy|greetings|what's up)/
+    const greetingRegex = /(hello|hi|howdy|greetings|what's up|hey there|heya)/
     const insultRegex = /(stupid|idiot|bitch|dumbass|retard|fuck|dick|lousy|suck|useless|loser)+/
-    const whyRegex = /(why)/
+    const whyRegex = /(why|how\s+)/
+    const yesRegex = /yes/
+    const noRegex = /no/
     let body = ""
     if(input.match(numberRegex)){
         body = "What do these numbers mean?"
     } else if (input.match(insultRegex)){
         body = insultResponses[getRandomInt(0, insultResponses.length - 1)]
+    }
+    else if (input.match(yesRegex)){
+        body = yesResponses[getRandomInt(0, yesResponses.length - 1)]
+    } 
+    else if (input.match(noRegex)){
+        body = noResponses[getRandomInt(0, noResponses.length - 1)]
     }
     else if (input.match(whyRegex)){
         body = whyResponses[getRandomInt(0, whyResponses.length - 1)]
@@ -133,17 +154,18 @@ export function triggerMidGlitchPhase(){
             },
             {
                 text: "Yes",
+                style: "cancel",
                 onPress: () => {
                     Alert.alert("ok sure", "say please, with a cherry on top",[
                         {
                             text: "No",
-                            style: "cancel",
                             onPress: () => {
                                 triggerDeclinedHelp("aw, you're no fun");
                                 resolve(false);
                             }
                         }, 
                         {
+                            style: "cancel",
                             text: "Please, with a cherry on top",
                             onPress: () => {
                                 resolve(true);

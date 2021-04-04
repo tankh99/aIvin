@@ -37,7 +37,7 @@ export default function ResetScreen(props: any) {
             <ActivityIndicator animating={true}/>
             
             <Animated.Text style={[{fontSize: 24, fontWeight: "bold"}]}>This won't take long</Animated.Text>
-            <Button onPress={() => reset()}>Reset</Button>
+            {/* <Button onPress={() => reset()}>Reset</Button> */}
             {/* <Button onPress={() => navigation.navigate("Welcome")}>Navigate</Button> */}
         </View>
     )

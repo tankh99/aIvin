@@ -1,7 +1,7 @@
 import { Formik } from 'formik'
 import { Button } from '@ant-design/react-native'
 import React, { useCallback, useEffect, useState } from 'react'
-import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, Alert, Vibration } from 'react-native'
 import InputField from '../../components/form/InputField'
 import ViewRoot from '../../components/ViewRoot'
 import { store } from '../../store/store'
@@ -13,7 +13,7 @@ import {Audio} from 'expo-av'
 import { useNavigation } from '@react-navigation/native'
 import { formatBotGiftedChatResponse } from '../../utils/chat'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { getPokeSound } from '../../utils/audio'
+import { bypassSilentMode, getLightGlitchSound, getPokeSound } from '../../utils/audio'
 
 export default function ChatScreen() {
 
@@ -28,18 +28,20 @@ export default function ChatScreen() {
     useEffect(() => {
         
         const loadPokeSound = async() => {
-            Audio.setAudioModeAsync({playsInSilentModeIOS: true})
             const pokeSound = await getPokeSound();
+            Audio.setAudioModeAsync({playsInSilentModeIOS: true})
             setPokeSound(pokeSound);
         }
         loadPokeSound()
         return () => {
-            pokeSound.unloadAsync();
+            if(pokeSound){
+                pokeSound.unloadAsync();
+            }
         }
     }, [])
 
 
-    const onSend = useCallback((messages = [], isPoke: boolean) => {
+    const onSend = useCallback((messages = [], pokeCounter:number) => {
 
         setMessages((previousMessages: any) => GiftedChat.append(previousMessages, messages))
         const {text} = messages[0]
@@ -52,30 +54,14 @@ export default function ChatScreen() {
 
     }, [])
 
-    const renderInputToolbar = () => {
-        return <InputToolbar />
-    }
-
-    const renderComposer = (props: any) => {
-        // console.log(props)
-        return <Composer
-        {...props}
-         textInputStyle={{
-            flex: 1,
-            borderRadius: 10,
-            paddingHorizontal: 10,
-            // paddingVertical: 20,
-            justifyContent: "center",
-            alignItems: "center"
-
-        }}/>
-    }
-
-    const poke = () => {
+    
+    const poke = async () => {
+        bypassSilentMode();
         setPokeCounter(pokeCounter+1);
-        pokeSound
-        Audio.setAudioModeAsync({playsInSilentModeIOS: true})
-        // pokeSound.playAsync();
+        
+        pokeSound.playAsync();
+        Vibration.vibrate();
+        
         if (pokeCounter <= 15){
             const randomBotName = botNameReplacements[getRandomInt(0, botNameReplacements.length-1)]
             setBotName(randomBotName)
@@ -114,7 +100,6 @@ export default function ChatScreen() {
             })
             // console.log(filteredRetorts)
             const formattedRetort = formatBotGiftedChatResponse(filteredRetorts[getRandomInt(0, filteredRetorts.length - 1)].response, randomBotName)
-            console.log(formattedRetort)
             setMessages((previousMessages: any) => GiftedChat.append(previousMessages, [formattedRetort]))
             // store.addMessage(Math.random(), filteredRetorts[getRandomInt(0, filteredRetorts.length - 1)].response, randomBotName)
     
@@ -148,7 +133,7 @@ export default function ChatScreen() {
     }
 
     return (
-        <ViewRoot padded safe style={styles.chatScreen}>
+        <ViewRoot padded safe style={styles.chatScreen} statusBar="light">
             <TouchableOpacity style={{
                 marginBottom: 12
             }}
@@ -164,7 +149,7 @@ export default function ChatScreen() {
                 alwaysShowSend
                 messages={messages}
                 bottomOffset={insets.bottom}
-                onSend={messages => (onSend(messages, false))}
+                onSend={messages => (onSend(messages, pokeCounter))}
                 wrapInSafeArea
                 // isKeyboardInternallyHandled={false}
                 listViewProps={{

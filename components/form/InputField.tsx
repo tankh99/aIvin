@@ -14,9 +14,9 @@ export default function InputField(props: any) {
     
     const {name, label, value, formikBag, ...rest}= props
     const {values, handleChange} = formikBag
-
+    // {alignSelf: "center", flex: 1, justifyContent: "center", marginTop: 4, marginRight: 4}
     return (
-        <View style={[formStyles.inputContainer, {alignSelf: "center", flex: 1, justifyContent: "center", marginTop: 4, marginRight: 4}]}>
+        <View style={[formStyles.inputContainer, ]}>
             {label && <Text>{label}</Text>}
             <TextInput
                 style={formStyles.input}

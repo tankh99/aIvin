@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import { Message } from '../store/models/message';
 import { store } from './../store/store';
 import {Audio} from 'expo-av'
@@ -17,11 +18,12 @@ export const botNameReplacements = [
 ]
 
 const greetingResponses = [
-    "Hello there",
+    `Hello there, ${store.user.username}`,
     "Greetings, traveller",
     "A chance meeting",
     `Hi, my name is AIvin`,
-    "Hello"
+    "Hello",
+    `Good to meet you ${store.user.username}`
 ]
 
 const insultResponses = [
@@ -76,6 +78,7 @@ export function reply(input: string, pokeCount: number){
         body = greetingResponses[getRandomInt(0, greetingResponses.length - 1)]
     } else {
         let responses: any;
+        console.log(pokeCount)
         if(pokeCount < 3){
             responses = politeResponses
         } else if (pokeCount < 5){
@@ -94,4 +97,60 @@ export function reply(input: string, pokeCount: number){
         timestamp: new Date()
     }
     return message;
+}
+
+
+export function triggerMidGlitchPhase(){
+    return new Promise((resolve) => {
+
+        Alert.alert("uh oh?", "there seems to be a problem here. need my help?", [
+            {
+                text: "No",
+                style: "cancel",
+                onPress: () => {
+                    triggerDeclinedHelp("oh, good luck then")
+                    resolve(false);
+                }
+            },
+            {
+                text: "Yes",
+                onPress: () => {
+                    Alert.alert("ok sure", "say please, with a cherry on top",[
+                        {
+                            text: "No",
+                            style: "cancel",
+                            onPress: () => {
+                                triggerDeclinedHelp("aw, you're no fun");
+                                resolve(false);
+                            }
+                        }, 
+                        {
+                            text: "Please, with a cherry on top",
+                            onPress: () => {
+                                resolve(true);
+                            }
+                        }
+                    ], {cancelable: false})
+                }
+            }
+        ], {cancelable: false})
+    })
+}
+
+export function triggerDeclinedHelp(message: string){
+    Alert.alert("it's your decision", message, [
+        {
+            text: "oh no!",
+            onPress: () => {
+                
+            }
+        }
+    ])
+
+}
+
+export function resetFactoryDefault(){
+    store.updateResetting(true);
+    store.updateAcceptedCall(false)
+    store.updateStartedSpeech(false)
 }

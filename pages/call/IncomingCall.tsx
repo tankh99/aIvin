@@ -8,19 +8,18 @@ import * as Speech from 'expo-speech'
 import { DEVICE_HEIGHT } from '../../constants/device';
 import { ICON_COLOR, ICON_SIZE } from '../../constants/icons';
 import CallScreenButton from '../../components/CallScreenButton'
+import { store } from '../../store/store';
 
 
 
 export default function IncomingCall(props: any) {
-
-    const {setAccepted} = props;
     const navigation: any = useNavigation()
+    const {forceStop} = props
     const [declined, setDeclined] = useState(false)
     
     const acceptCall = async () => {
-        Vibration.cancel();
-        Speech.stop();
-        setAccepted(true);
+        forceStop()
+        store.updateAcceptedCall(true)
     }
 
     const declineCall = () => {

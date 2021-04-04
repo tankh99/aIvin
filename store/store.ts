@@ -3,5 +3,10 @@ import {RootStore} from './models'
 export const store = RootStore.create({
     messages: {},
     user: {},
-    bot: {}
+    bot: {},
+    acceptedCall: false,
+    resetting: false,
+    startedSpeech: false,
+    sounds: {}
+
 })

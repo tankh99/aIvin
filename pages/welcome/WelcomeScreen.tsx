@@ -20,8 +20,7 @@ export default function WelcomeScreen() {
     }
 
     return (
-        <ViewRoot safe style={{flex: 1, alignSelf: "center", justifyContent: "center", alignItems: "center"}}>
-            <View>
+        <ViewRoot safe padded style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
                 <Text style={{fontWeight: "bold", fontSize:36, textAlign:"center", marginBottom: 28}}>Choose a name</Text>
                 <Formik
                     initialValues={{username: ""}}
@@ -29,7 +28,7 @@ export default function WelcomeScreen() {
                     {(formikBag) => {
                         const {handleSubmit} = formikBag
                         return (
-                            <View style={{flexDirection:"column"}}>
+                            <View style={{alignSelf: "stretch", justifyContent: "center"}}>
                                 <InputField
                                     name="username"
                                     label="Username"
@@ -40,21 +39,10 @@ export default function WelcomeScreen() {
                                 <Button onPress={() => handleSubmit()}>
                                     <Text style={{color: "white"}}>Start Chatting</Text>
                                 </Button>
-                                {/* <Button title="Start Chatting"
-                                onPress={() => handleSubmit()}
-                                buttonStyle={{
-                                    backgroundColor: "#00e08e",
-                                    borderRadius: 10,
-                                }}
-                                titleStyle={{
-                                    fontSize: 16
-                                }} /> */}
                             </View>
                         )
                     }}
-
                 </Formik>
-            </View>
 
         </ViewRoot>
     )

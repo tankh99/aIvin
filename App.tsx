@@ -12,7 +12,6 @@ export default function App() {
   return (
     <Provider>
       <SafeAreaProvider>
-        {/* <Text>Hello</Text> */}
         <NavigationContainer>
 
           <MainNavigator/>

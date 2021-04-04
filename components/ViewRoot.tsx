@@ -8,17 +8,20 @@ interface P {
     padded?: boolean,
     safe?: boolean,
     style?: any,
+    statusBar?: "light" | "dark",
     children: any
 }
 
 export default function ViewRoot(props: P) {
-    const {padded, safe, style, children} = props
+    const {padded, safe, style, statusBar, children} = props
 
     const styleList = [padded && styles.padded, style]
+
+
     if(safe){
         return (    
             <SafeAreaView style={styleList}>
-                <StatusBar style="light"/> 
+                <StatusBar style={statusBar ? statusBar : "dark"}/> 
                     {/* <TouchableWithoutFeedback style={{zIndex: 10}} onPress={() => Keyboard.dismiss()} > */}
                     {/* <KeyboardAwareScrollView contentContainerStyle={style}> */}
                         {children}
@@ -30,6 +33,7 @@ export default function ViewRoot(props: P) {
     } else {
         return (
             <View style={styleList}>
+                <StatusBar style={statusBar ? statusBar : "dark"}/> 
                 {children}
             </View>
         )

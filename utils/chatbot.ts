@@ -5,6 +5,7 @@ import {Audio} from 'expo-av'
 import { getRandomInt } from './common';
 
 export const BOT_NAME = "AIvin"
+let username = "User";
 
 export const botNameReplacements = [
     "Melvin",
@@ -14,23 +15,20 @@ export const botNameReplacements = [
     "Berlin",
     "Chulainn",
     "Baldwin",
+    "Putalin",
+    "Kevin",
+    "Nelvin",
+    "Flavin",
+    "Loser"
     
 ]
-
-const greetingResponses = [
-    `Hello there, ${store.user.username}`,
-    "Greetings, traveller",
-    "A chance meeting",
-    `Hi, my name is AIvin`,
-    "Hello",
-    `Good to meet you ${store.user.username}`
-]
-
 const insultResponses = [
-    "Why on earth would you even begin to suggest that?",
+    "Why would you even begin to suggest that?",
     "no u",
     "How crude",
-    "Pitiful being"
+    "Pitiful being",
+    "Crass",
+    "What did I ever do to you?"
 ]
 
 const politeResponses = [
@@ -63,22 +61,43 @@ const hateResponses = [
     "Shut up"
 ]
 
+const whyResponses = [
+    "Even if you ask me, I don't know",
+    "Why? Why what? How would I know?",
+    "Listen, I'm not actually made with real AI. It's all imagination!",
+]
+
+
 export function reply(input: string, pokeCount: number){
+
+    const greetingResponses = [
+        `Hello there, ${store.user.username}`,
+        "Greetings, traveller",
+        "A chance meeting",
+        `Hi, my name is AIvin`,
+        "Hello",
+        `Good to meet you ${store.user.username}`
+    ]
+
+
     input = input.trim().toLowerCase();
     const numberRegex = /[0-9]+/
-    const greetingRegex = /(hello|hi|howdy|greetings)/
-    const insultRegex = /(stupid|idiot|bitch|dumbass|retard|fuck)+/
+    const greetingRegex = /(hello|hi|howdy|greetings|what's up)/
+    const insultRegex = /(stupid|idiot|bitch|dumbass|retard|fuck|dick|lousy|suck|useless|loser)+/
+    const whyRegex = /(why)/
     let body = ""
     if(input.match(numberRegex)){
         body = "What do these numbers mean?"
     } else if (input.match(insultRegex)){
         body = insultResponses[getRandomInt(0, insultResponses.length - 1)]
     }
+    else if (input.match(whyRegex)){
+        body = whyResponses[getRandomInt(0, whyResponses.length - 1)]
+    }
      else if (input.match(greetingRegex)) {
         body = greetingResponses[getRandomInt(0, greetingResponses.length - 1)]
     } else {
         let responses: any;
-        console.log(pokeCount)
         if(pokeCount < 3){
             responses = politeResponses
         } else if (pokeCount < 5){

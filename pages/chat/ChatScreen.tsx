@@ -46,7 +46,7 @@ export default function ChatScreen() {
         setMessages((previousMessages: any) => GiftedChat.append(previousMessages, messages))
         const {text} = messages[0]
         let responseArr: any = []
-        
+        console.log(store.user)
         const response = reply(text, pokeCounter)
         const responseObj = formatBotGiftedChatResponse(response.body, botName);
         responseArr = responseArr.concat(responseObj)

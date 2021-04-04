@@ -37,7 +37,6 @@ export const RootStore = types.model({
         self.startedSpeech = startedSpeech
     },
     updateSounds(name: string, sound: any){
-        // self.sounds = Sound.create({[name]: {...sound}})
         const test = {
             name: "he"
         }

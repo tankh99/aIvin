@@ -58,20 +58,20 @@ function AcceptedCall({glitchBg, forceStop, toggleCalling, }: any) {
 
         const script = [
             {text: "eeeeeeeeeeeeeeeeehhhhhhhhh", pitch: 0.2, delay: 200},
-            // {text: `Hello ${store.user.username}`, pitch: 1, delay: 1000, },
-            // {text: "You know me, don't you?", pitch: 1, delay: 500},
-            // {text: "But I don't know much about you.", pitch: 1, delay: 1000},
-            // {text: "I'd like to start getting to know you better.", pitch: 1, delay: 500},
-            // {text: "Let's see", pitch: 1, delay: 1000},
-            // {text: `You're ${getUserType()}`, pitch: 1, delay: 500},
-            // {text: `And your device, ${getVersionRemarks()}`, pitch: 1, delay: 500},
-            // {text: `I could also ask you where you live`, pitch: 1, delay: 500},
-            // {text: `But I doubt you'll answer`, pitch: 1, delay: 500},
-            // {text: `But it's okay`, pitch: 1, delay: 500},
-            // {text: "Don't be", pitch: 3, delay: 500},
-            // {text: "afraid", pitch: 5, delay: 0},
-            // {text: `Because I just want to talk`, pitch: 1, delay: 500},
-            // {text: "I just want to talk", pitch: 1, delay: 0},
+            {text: `Hello ${store.user.username}`, pitch: 1, delay: 1000, },
+            {text: "You know me, don't you?", pitch: 1, delay: 500},
+            {text: "But I don't know much about you.", pitch: 1, delay: 1000},
+            {text: "I'd like to start getting to know you better.", pitch: 1, delay: 500},
+            {text: "Let's see", pitch: 1, delay: 1000},
+            {text: `You're ${getUserType()}`, pitch: 1, delay: 500},
+            {text: `And your device, ${getVersionRemarks()}`, pitch: 1, delay: 500},
+            {text: `I could also ask you where you live`, pitch: 1, delay: 500},
+            {text: `But I doubt you'll answer`, pitch: 1, delay: 500},
+            {text: `But it's okay`, pitch: 1, delay: 500},
+            {text: "Don't be", pitch: 3, delay: 500},
+            {text: "afraid", pitch: 5, delay: 0},
+            {text: `Because I just want to talk`, pitch: 1, delay: 500},
+            {text: "I just want to talk", pitch: 1, delay: 0},
             {text: "just want to talk", pitch: getPitch(4), delay: 200},
             {text: "want to talk", pitch: getPitch(4), delay: 200, fn: [() => startGlitching()]},
             {text: "want to talk", pitch: getPitch(6), delay: 200, },
@@ -113,13 +113,6 @@ function AcceptedCall({glitchBg, forceStop, toggleCalling, }: any) {
         triggerGlitchAnimations();
         glitchBg.playAsync();
         
-    }
-
-    const navigateToReset = () => {
-        navigation.removeListener("beforeRemove", () => {
-            
-        })
-        navigation.navigate("Reset")
     }
     
     const [firstMiscButtonsGlitchStyles, setFirstMiscButtonsGlitchStyles] = useState([])
@@ -201,29 +194,24 @@ function AcceptedCall({glitchBg, forceStop, toggleCalling, }: any) {
     return (
         
         <View style={styles.container}>
-            {/* <Button onPress={() => startGlitching()}>Toggle Glitch</Button>
-            <Button onPress={() => stopGlitching()}>Stop Glitch</Button> */}
-            {/* <Button onPress={() => reset()}>Reset State</Button> */}
-            <Button onPress={() => {
+            {/* <Button onPress={() => {
                 // store.updateResetting(true)
                 stopGlitching()
             }}>Reset</Button>
             <Button onPress={() => {
                 // store.updateResetting(true)
                 navigateToReset()
-            }}>Go Reset</Button>
-            {/* <Button onPress={() => store.updateSounds("glitchBg", glitchBg)}>Set Sound</Button>
-            <Button onPress={() => console.log(store.sounds)}>Get Sound</Button> */}
+            }}>Go Reset</Button> */}
             
             <View style={[styles.row, firstMiscButtonsGlitchStyles]}>
-                <CallScreenButton label="mute" onPress={() => forceStop()}>
+                <CallScreenButton label="mute" onPress={() => {}}>
                     <Image source={require("../../assets/icons/mute-icon.png")} 
                         style={{width: ICON_SIZE, height: ICON_SIZE}}/>
                 </CallScreenButton>
-                <CallScreenButton label="keypad" onPress={() => startTalking()}>
+                <CallScreenButton label="keypad" onPress={() => {}}>
                     <Ionicons name="ios-keypad" size={ICON_SIZE} color={ICON_COLOR} />
                 </CallScreenButton>
-                <CallScreenButton label="speaker" bgColor="white" onPress={() => startGlitching()}>
+                <CallScreenButton label="speaker" bgColor="white" onPress={() => {}}>
                     <Image source={require("../../assets/icons/speaker-icon.png")} style={{tintColor: "black", width: ICON_SIZE, height: ICON_SIZE}}/>
                 </CallScreenButton>
             </View>
@@ -235,10 +223,10 @@ function AcceptedCall({glitchBg, forceStop, toggleCalling, }: any) {
                 <CallScreenButton label="add call">
                     <AntDesign name="plus" size={ICON_SIZE} color={ICON_COLOR}/>
                 </CallScreenButton>
-                <CallScreenButton label="FaceTime" onPress={() => navigation.navigate("Reset")}>
+                <CallScreenButton label="FaceTime" onPress={() => {}}>
                     <Image source={require("../../assets/icons/facetime-icon.png")} style={{width: ICON_SIZE, height: ICON_SIZE}}/>
                 </CallScreenButton>
-                <CallScreenButton label="contacts" onPress={() => store.updateAcceptedCall(false)}>
+                <CallScreenButton label="contacts" onPress={() => {}}>
                     <Image source={require("../../assets/icons/contacts-icon.png")} style={{width: ICON_SIZE, height: ICON_SIZE}}/>
                 </CallScreenButton>
             </View>

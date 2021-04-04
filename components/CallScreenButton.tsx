@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 4
     },
     endCallButton: {
-        backgroundColor: "red",
+        backgroundColor:"#FF3B2F",
         marginTop: 80
         // position: "absolute",
         // top: DEVICE_HEIGHT
